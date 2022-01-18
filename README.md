@@ -5,12 +5,12 @@ Progetto OOP
 * [Rotte](#rotte)
 
 <div id = introduzione>
-##INTRODUZIONE
+## INTRODUZIONE
 Paragrafo dell'introduzione.
 </div>
 
 <div id = rotte>
-##ROTTE
+## ROTTE
 Paragrafo rotte
 
 | Tipo  | Rotta /events                                                           | Descrizione                       | Parametri                                               |
