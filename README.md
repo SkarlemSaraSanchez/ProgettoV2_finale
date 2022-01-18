@@ -3,13 +3,13 @@ Progetto OOP
 
 * [Introduzione](#introduzione)
 * [Rotte](#rotte)
+* [Esempi Request](#esempi_request)
 
-<div id = introduzione>
+<div id = introduzione />
 ## INTRODUZIONE
-Paragrafo dell'introduzione.
-</div>
+Paragrafo dell'introduzione
 
-<div id = rotte>
+<div id = rotte />
 ## ROTTE
 Paragrafo rotte
 
@@ -21,4 +21,6 @@ Paragrafo rotte
 |` GET `| [`/country/{countryCode}/state/{stateCode}`]                            |                                   | `countryCode`,`stateCode`                               |
 |` GET `| [`/country/{countryCode}/state/{stateCode}/classification/{nameClass}`] |                                   | `countryCode`,`stateCode`,`nameClass`                   |
 
- </div>
+<div id = esempi_request />
+## ESEMPI REQUEST
+Paragrafo esempo request
