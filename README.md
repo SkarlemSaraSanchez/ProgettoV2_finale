@@ -22,6 +22,6 @@ Paragrafo rotte
 |` GET `| [`/country/{countryCode}/state/{stateCode}`]                            |                                   | `countryCode`,`stateCode`                               |
 |` GET `| [`/country/{countryCode}/state/{stateCode}/classification/{nameClass}`] |                                   | `countryCode`,`stateCode`,`nameClass`                   |
 
-<div id = esempi_request />
+
 ## ESEMPI REQUEST
 Paragrafo esempo request
