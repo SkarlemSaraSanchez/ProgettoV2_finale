@@ -30,7 +30,7 @@ Per l'utilizzo delle rotte di seguito troviamo una legenda dei parametri che si 
 (:heavy_exclamation_mark:)  E' possibile inserire più di un valore (basta dividere i valori desiderati con `-`)
 
 
-### Stas
+### Stats
 
 |**Tipo**| **Rotta** (/stats/country)                                                                   |**Parametri**                                            |
 |--------|----------------------------------------------------------------------------------------------|---------------------------------------------------------|
