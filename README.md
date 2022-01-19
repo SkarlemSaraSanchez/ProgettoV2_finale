@@ -9,7 +9,7 @@ Progetto OOP
 <div id = introduzione />
 ## INTRODUZIONE
 Paragrafo dell'introduzione
-<p> L'applicazione consente all'utente di analizzare gli eventi che avreanno luogo in un determinato paese, in particolare in Canada, utilizzando l'API di Ticket Master. Ticket Master si occupa della gestione di eventi appartenenti a varie classificazioni. </p>
+L'applicazione consente all'utente di analizzare gli eventi che avreanno luogo in un determinato paese, in particolare in Canada, utilizzando l'API di Ticket Master. Ticket Master si occupa della gestione di eventi appartenenti a varie classificazioni.
 
 <div id = rotte />
 ## ROTTE
@@ -20,7 +20,7 @@ L'applicazione consente di utilizzare 2 diversi tipi di rotte:
  
 Per l'utilizzo delle rotte di seguito troviamo una legenda dei parametri che si possono utilizzare nelle richieste:
 - `country` indica la nazione 
-- `stateCode` indica lo stato o gli stati *
+- `stateCode` indica lo stato o gli stati
 - `nameCat` indica la classificazione o le classificazioni
 - `startdate` inidica la data di inizio periodo
 - `enddate` indica la data fine periodo
