@@ -25,13 +25,26 @@ Filtraggio in base a: uno o più stati, uno o più generi, periodo personalizzat
 
 <div id = spec_extra />
 
-### EXTRA
+## SPECIFICHE EXTRA
 
 #### GENERATORE REQUEST URL PER ENDPOINT CON CONNESIONE AD ENDPOINT <br>
 In funzione delle specifiche di progetto, con l'esigenza di utilizzare un endpoint da cui recuperare informazioni, abbiamo deciso di generalizzare questa esigenza e di
 incapsularne la responsabilità, immaginandone il riuso per altri progetti, per altri contesti. <br>
 Abbiamo quindi implementato classi che instaziono oggetti in grado di gestire tutti i possibili vincoli funzionali che tale obbietivo avrebbe implicato. 
 
+**Vincoli Funzionali**
+* Endpoint diversi implicano pattern api o pattern url diversi, quindi possiamo comporre url/api in ogni punto del codice dove c'è ne sia bisogno settando dominio, path (opzionale),	queryString(opzionale), e parametri di queryString definendone chiavi e valori in maniera e numero arbitrario.
+* Creazione di un file di testo per eventuali configurazioni rispetto a un endpoint (nel nostro progetto utilizzato per valore apikey).
+* Definizione di regole di scrittura nel file in funzione del dato di configurazione da memorizzare (cosi facendo nel nostro caso è possibile memorizzare piu apikey nel file ma il nostro oggetto responsabile della lettura in funzione di queste regole prestabilite e standardizzate dal team di sviluppo è in grado di selezionare la giusta apikey relativa  all'endpoint cui riferisce).
+
+**Le Classi** (*package com.univpm.demo.utils*)
+* __ApiKeyScanner.java__ - L'oggetto di tipo ApiKeyScanner va a leggere in un file di testo recuperando l'apikey di un dato endpoint.
+* __APICall.java__ - Instanziando un oggetto di tipo APICall effetuiamo una chiamata all'url che passiamo come parametro al suo metodo getData(url), lo stesso metodo ritorna il json di risposta. 
+* __EndPoint.java__ - L'oggetto instanziato di questa classe è l oggetto con cui costruiamo tutti i tipi di url da passare al metodo getdata di APICall. La classe contiene metodi che permettono la realzzazione di qualsiasi tipo di url ovvero attraverso l'oggetto possiamo definire un path per l'url e definire tutti i parametri di una queryString.
+* __EndPointApiKey.java__ - (estenzione di EndPoint) Avendo l'esigenza di inserire per ogni chiamata il parametro apikey alla fine di una queryString, per evitare ogni volta di settare questo parametro per Endpoint sul oggetto di tipo EndPoint abbiamo creato questa classe che estende Endpoint ed ogni chiamata aggancia come ultimo parametro della queryString l'apikey. 
+
+In effetti nel codice istanziamo un oggetto di tipo EndPointApikey con il 	quale generare l url da passare a APICall.
+* __Parametro.java__ - Con questa classe possiamo realizzare parametri di ogni tipo e anche questa è una classe che può essere riusata in altri contesti o per altre esigenze funzionali. Possiamo associare una chiave a ogni tipo di dato che sia un oggetto "x" o un tipo di dato primitivo. In molti casi nel nostro codice abbiamo utilizzato oggetti di questo tipo	ma con informazione incapsulata diversa, un esempio è quando andiamo a settare i parametri di chiamata con l'oggetto EndPointAiKey.
 
 
 <div id = rotte />
