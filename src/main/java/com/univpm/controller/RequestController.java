@@ -35,7 +35,7 @@ public class RequestController {
 	/**
 	 * Questo metodo permette all'utente di visualizzare le statistiche relative ad una nazione. 
 	 * Ovvero mostra il paese relativo o i paesi relativi che hanno il numero minimo di eventi e analogamente il paese o i paesi che hanno il numero massimo di eventi,
-	 * il numero degli eventi del paese e per ultimo la media degli eventi della nazione.
+	 * il numero degli eventi del paese e per ultimo la media degli eventi della nazione scelta.
 	 * 
 	 * @param countryCode indica la nazione
 	 * @param nameCat indica la classificazione o le classificazioni
