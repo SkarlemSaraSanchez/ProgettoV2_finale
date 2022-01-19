@@ -5,6 +5,7 @@
 # SOMMARIO
 * [Introduzione](#introduzione)
 * [Specifiche Funzionali](#spec_funzionali)
+   * [Extra](#spec_extra)
 * [Rotte](#rotte)
 * [Esempi Request](#esempi_request)
    * [Esempi Stats](#esempi_stats)
@@ -15,6 +16,23 @@
 
 ## INTRODUZIONE
 L'applicazione consente all'utente di analizzare gli eventi che avranno luogo in un determinato paese, in particolare in Canada, utilizzando l'API di Ticket Master. Ticket Master rende un set di informazioni per gli eventi organizzati nel mondo, la nostra applicazione attraverso le proprie API (di seguito elencate) ne riproduce lo stesso comportamento senza limiti informativi (in funzione dei parametri immessi dall'utente).
+
+<div id = spec_funzionali />
+
+## SPECIFICHE FUNZIONALI
+Statistiche per ogni stato: il numero totale di eventi, numero di eventi raggruppati per genere, numero minimo/massimo/medio di eventi mensili. 
+Filtraggio in base a: uno o più stati, uno o più generi, periodo personalizzato per calcolare valori di minimo/massimo/media eventi (invece di calcolarli mensilmente).
+
+<div id = spec_extra />
+
+### EXTRA
+
+#### GENERATORE REQUEST URL PER ENDPOINT CON CONNESIONE AD ENDPOINT <br>
+In funzione delle specifiche di progetto, con l'esigenza di utilizzare un endpoint da cui recuperare informazioni, abbiamo deciso di generalizzare questa esigenza e di
+incapsularne la responsabilità, immaginandone il riuso per altri progetti, per altri contesti. <br>
+Abbiamo quindi implementato classi che instaziono oggetti in grado di gestire tutti i possibili vincoli funzionali che tale obbietivo avrebbe implicato. 
+
+
 
 <div id = rotte />
 
