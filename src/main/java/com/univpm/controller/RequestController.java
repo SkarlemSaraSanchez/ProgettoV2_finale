@@ -112,7 +112,7 @@ public class RequestController {
 	 * @param end indica la data di fine del periodo
 	 * @return <code>JSONObject</code>
 	 */
-	@RequestMapping("/country/{countryCode}/state/{stateCode}/classification/{nameClass}/startdate/{start}/enddate/{end}")
+	@RequestMapping("/stats/country/{countryCode}/state/{stateCode}/classification/{nameClass}/startdate/{start}/enddate/{end}")
 	public  JSONObject getNumEventsByStateClassPeriod(@PathVariable String countryCode,@PathVariable String stateCode,
 			@PathVariable String nameClass,@PathVariable String start,@PathVariable String end) {	
 		response= statsWithresponse.getNumberOfEvents(countryCode,stateCode,nameClass,start,end); 	
