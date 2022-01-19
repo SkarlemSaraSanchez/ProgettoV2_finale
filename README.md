@@ -46,6 +46,7 @@ Per l'utilizzo delle rotte di seguito troviamo una legenda dei parametri che si 
 |` GET ` | `/country/{countryCode}/state/{stateCode}/classification/{nameClass}` | `countryCode`,`stateCode`,`nameClass`                   |
 |` GET ` | `/events/classification`                                              |                                                         | 
 
+<br>
 
 <div id = esempi_request />
 
@@ -456,3 +457,6 @@ Request URL: __/stats/country/CA/state/ON/statsmensili/2022__
     ]
 }
 ```
+
+## ESEMPI ALTRE REQUEST
+
