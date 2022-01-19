@@ -120,7 +120,8 @@ Request URL: __/stats/country/CA/classification/music__
             "categoria": "music",
             "media eventi per stato  music": 193
         }
-    ]
+    ],
+    "nazione": "ca"
 }
 ```
 Request URL: __/stats/country/CA/classification/music-sports__
@@ -189,6 +190,7 @@ Request URL: __/stats/country/CA/classification/music-sports__
             "media eventi per stato  sports": 65,
             "categoria": "sports"
         }
-    ]
+    ],
+    "nazione": "ca"
 }
 ```
