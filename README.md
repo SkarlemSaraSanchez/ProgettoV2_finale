@@ -18,7 +18,7 @@ Paragrafo rotte
 
 ### STATISTICHE
 
-|**Tipo**| **Rotta**                                                             | **Descrizione**                   |**Parametri**                                            |
+|**Tipo**| **Rotta** (/stats)                                                    | **Descrizione**                   |**Parametri**                                            |
 |--------|-----------------------------------------------------------------------|-----------------------------------|---------------------------------------------------------|
 |` GET ` | `/stats/country/{countryCode}`                                        |Restituisce le statistiche         | `countryCode`,`                                         |
 |` GET ` | `/stats/country/{countryCode}/classification/{nameCat}`               |Restituisce le statistiche         | `countryCode`,`nameCat`                                 |
