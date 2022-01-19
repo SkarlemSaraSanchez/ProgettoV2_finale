@@ -1,6 +1,8 @@
-# ProgettoV2_finale
-Progetto OOP
+# Progetto OOP Celozzi - Sanchez
 
+![ticket_master_official](https://user-images.githubusercontent.com/95294283/150121832-d316b42a-4142-4ee5-bcb7-aa17ec900ea4.jpg)
+
+# SOMMARIO
 * [Introduzione](#introduzione)
 * [Rotte](#rotte)
 * [Esempi Request](#esempi_request)
@@ -25,7 +27,7 @@ Per l'utilizzo delle rotte di seguito troviamo una legenda dei parametri che si 
 - `startdate` inidica la data di inizio periodo
 - `enddate` indica la data fine periodo
 
-(:heavy_exclamation_mark:) E' possibile inserire più di un valore (basta dividere i valori desiderati con `-`)
+(:heavy_exclamation_mark:)  E' possibile inserire più di un valore (basta dividere i valori desiderati con `-`)
 
 
 ### Stas
@@ -39,7 +41,7 @@ Per l'utilizzo delle rotte di seguito troviamo una legenda dei parametri che si 
   
 ### Altre
 
-|__Tipo__| __Rotta__ (/stats/country)                                            |__Parametri__                                            |
+|__Tipo__| __Rotta__                                                             |__Parametri__                                            |
 |--------|-----------------------------------------------------------------------|---------------------------------------------------------|
 |` GET ` | `/country/{countryCode}`                                              | `countryCode`                                           |
 |` GET ` | `/country/{countryCode}/state/{stateCode}`                            | `countryCode`,`stateCode`                               |
@@ -459,4 +461,114 @@ Request URL: __/stats/country/CA/state/ON/statsmensili/2022__
 ```
 
 ## ESEMPI ALTRE REQUEST
+
+### /country/{countryCode}
+Request URL: __/country/CA__
+```json
+{
+    "numero eventi": 6414,
+    "contryCode": "ca"
+}
+```
+### /country/{countryCode}/state/{stateCode}
+Request URL: __/country/CA/state/ON__
+```json
+{
+    "numero eventi": 3696,
+    "contryCode": "CA",
+    "stati": [
+        {
+            "numero eventi": 3696,
+            "stateCode": "ON"
+        }
+    ]
+}
+```
+Request URL: __/country/CA/state/ON-QC-PE-NU__
+```json
+{
+    "numero eventi": 4868,
+    "contryCode": "CA",
+    "stati": [
+        {
+            "numero eventi": 3696,
+            "stateCode": "ON"
+        },
+        {
+            "numero eventi": 1159,
+            "stateCode": "QC"
+        },
+        {
+            "numero eventi": 13,
+            "stateCode": "PE"
+        },
+        {
+            "numero eventi": "0",
+            "stateCode": "NU"
+        }
+    ]
+}
+```
+### /country/{countryCode}/state/{stateCode}/classification/{nameClass}
+Request URL: __/country/CA/state/QC/classification/music__
+```json
+{
+    "categorie": [
+        {
+            "categoria": "music",
+            "stati": [
+                {
+                    "numero eventi": 556,
+                    "stateCode": "QC"
+                }
+            ]
+        }
+    ],
+    "contryCode": "CA"
+}
+```
+Request URL: __/country/CA/state/QC-ON-NU/classification/music-sports__
+```json
+{
+    "categorie": [
+        {
+            "categoria": "music",
+            "stati": [
+                {
+                    "numero eventi": 556,
+                    "stateCode": "QC"
+                },
+                {
+                    "numero eventi": 886,
+                    "stateCode": "ON"
+                },
+                {
+                    "numero eventi": "0",
+                    "stateCode": "NU"
+                }
+            ]
+        },
+        {
+            "categoria": "sports",
+            "stati": [
+                {
+                    "numero eventi": 143,
+                    "stateCode": "QC"
+                },
+                {
+                    "numero eventi": 309,
+                    "stateCode": "ON"
+                },
+                {
+                    "numero eventi": "0",
+                    "stateCode": "NU"
+                }
+            ]
+        }
+    ],
+    "contryCode": "CA"
+}
+```
+
+
 
