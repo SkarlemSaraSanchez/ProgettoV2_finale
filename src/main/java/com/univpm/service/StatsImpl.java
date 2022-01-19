@@ -85,7 +85,7 @@ public class StatsImpl implements I_Stats {
 				}
 				else {
 					System.out.println("DENTRO ELSE ");
-					err.put("", "connessione fallita");
+					err.put("warning", "connessione fallita");
 					err.put("messaggio", "problema interno al software"
 							+ " controlla apikey ed endpoint");
 					err.remove("errore");
@@ -185,8 +185,7 @@ public class StatsImpl implements I_Stats {
 								String end=getDate(endDate);
 								
 								if(start==null || end==null) {
-									err.put("Errore", "Periodo non valido");
-									err.put("Messaggio", "Pattern di chiamata compromesso");
+									err.put("Messaggio", "Periodo non valido!");
 									return err;
 								}
 								
@@ -197,6 +196,14 @@ public class StatsImpl implements I_Stats {
 								
 								source.setChiaveValore("startDateTime", start);
 								source.setChiaveValore("endDateTime", end);
+								
+								JSONObject periodo = new JSONObject();
+								periodo.put("Start Date", startDate);
+								periodo.put("End Date", endDate);
+								JSONArray arr_periodo = new JSONArray();
+								arr_periodo.add(periodo);
+								new_resp.put("Periodo", arr_periodo);
+								
 							}
 							JSONObject risposta = chiamante.getData(source.getApi());
 							JSONObject resp1=new JSONObject();
@@ -418,7 +425,8 @@ public class StatsImpl implements I_Stats {
 							obj5.put("statistiche", a_stats);
 							a5.add(obj5);
 						}
-						respost.put("stats",a5);	
+						respost.put("Stats",a5);
+						respost.put("nazione", "ca");
 						resp=respost;	
 					}
 				
@@ -472,7 +480,7 @@ public class StatsImpl implements I_Stats {
 					obj5.put("media eventi nazione ", media);
 					obj5.put("statistiche", a_stats);
 					
-					respost.put("xxxtttpippo",obj5);	
+					respost.put("Stats",obj5);	
 					resp = respost;
 				}
 			}
@@ -485,7 +493,8 @@ public class StatsImpl implements I_Stats {
 		}
 		else {
 			JSONObject respost=new JSONObject();
-			respost.put("messagio", "svegliaaaaa");
+			respost.put("messagio", "statistiche disponibili solo per il Canada");
+			respost.put("codice ammesso", "countryCode: ca/CA");
 			resp=respost;
 		}
 		return resp;
