@@ -29,8 +29,10 @@ Per l'utilizzo delle rotte di seguito troviamo una legenda dei parametri che si 
 - `startdate` inidica la data di inizio periodo  (:grey_exclamation:)
 - `enddate` indica la data fine periodo  (:grey_exclamation:)
 
-(:heavy_exclamation_mark:)  E' possibile inserire più di un valore (basta dividere i valori desiderati con `-`)
+(:heavy_exclamation_mark:)  E' possibile inserire più di un valore (basta dividere i valori desiderati con `-`) <br>
 (:grey_exclamation:)  La data deve essere inserita in formato data italiano __gg/mm/aaaa__
+
+<br>
 
 ### Stats
 
