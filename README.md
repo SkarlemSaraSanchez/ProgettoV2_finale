@@ -18,12 +18,12 @@ Paragrafo rotte
 
 ### STATISTICHE
 
-|**Tipo**| **Rotta** (/stats/country)                                            |A|**Parametri**                                            |
-|--------|-----------------------------------------------------------------------|-|---------------------------------------------------------|
-|` GET ` | `/{countryCode}`                                                      |A| `countryCode`,`                                         |
-|` GET ` | `/{countryCode}/classification/{nameCat}`                             |A| `countryCode`,`nameCat`                                 |
-|` GET ` | `/{countryCode}/state/{stateCode}/classification/{nameClass}/startdate/{start}/enddate/{end}`|| `countryCode`,`stateCode`,`nameClass`,`start`,`end`     |
-|` GET ` | `/{countryCode}/state/{stateCode}/statsmensili/{anno}`                |A| `countryCode`,`stateCode`,`anno`                        |
+|**Tipo**| **Rotta** (/stats/country)                                                                   |**Parametri**                                            |
+|--------|----------------------------------------------------------------------------------------------|---------------------------------------------------------|
+|` GET ` | `/{countryCode}`                                                                             | `countryCode`,`                                         |
+|` GET ` | `/{countryCode}/classification/{nameCat}`                                                    | `countryCode`,`nameCat`                                 |
+|` GET ` | `/{countryCode}/state/{stateCode}/classification/{nameClass}/startdate/{start}/enddate/{end}`| `countryCode`,`stateCode`,`nameClass`,`start`,`end`     |
+|` GET ` | `/{countryCode}/state/{stateCode}/statsmensili/{anno}`                                       | `countryCode`,`stateCode`,`anno`                        |
   
 ### ALTRE
 
