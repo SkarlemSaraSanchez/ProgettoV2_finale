@@ -4,6 +4,7 @@
 
 # SOMMARIO
 * [Introduzione](#introduzione)
+* [Specifiche Funzionali](#spec_funzionali)
 * [Rotte](#rotte)
 * [Esempi Request](#esempi_request)
    * [Esempi Stats](#esempi_stats)
