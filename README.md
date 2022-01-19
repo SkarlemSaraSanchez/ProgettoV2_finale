@@ -18,7 +18,7 @@ Paragrafo rotte
 
 |**Tipo**| **Rotta**                                                             | **Descrizione**                   |**Parametri**                                            |
 |--------|-----------------------------------------------------------------------|-----------------------------------|---------------------------------------------------------|
-|` GET ` | `/country/{countryCode}`                                              |                                   | `countryCode`                                           |
+|` GET ` | `/country/{countryCode}`                                              | Restituisce il numero degli eventi della nazione| `countryCode`                                           |
 |` GET ` | `/stats/country/{countryCode}`                                        |                                   | `countryCode`,`                                         |
 |` GET ` | `/stats/country/{countryCode}/classification/{nameCat}`               |                                   | `countryCode`,`nameCat`                                 |
 |` GET ` | `/country/{countryCode}/state/{stateCode}`                            |                                   | `countryCode`,`stateCode`                               |
