@@ -28,16 +28,16 @@ Per l'utilizzo delle rotte di seguito troviamo una legenda dei parametri che si 
 (:heavy_exclamation_mark:) E' possibile inserire più di un valore (basta dividere i valori desiderati con `-`)
 
 
-### STATISTICHE
+### Stas
 
 |**Tipo**| **Rotta** (/stats/country)                                                                   |**Parametri**                                            |
 |--------|----------------------------------------------------------------------------------------------|---------------------------------------------------------|
-|` GET ` | `/{countryCode}`                                                                             | `countryCode`                                         |
+|` GET ` | `/{countryCode}`                                                                             | `countryCode`                                           |
 |` GET ` | `/{countryCode}/classification/{nameCat}`                                                    | `countryCode`,`nameCat`                                 |
 |` GET ` | `/{countryCode}/state/{stateCode}/classification/{nameClass}/startdate/{start}/enddate/{end}`| `countryCode`,`stateCode`,`nameClass`,`start`,`end`     |
 |` GET ` | `/{countryCode}/state/{stateCode}/statsmensili/{anno}`                                       | `countryCode`,`stateCode`,`anno`                        |
   
-### ALTRE
+### Altre
 
 |__Tipo__| __Rotta__ (/stats/country)                                            |__Parametri__                                            |
 |--------|-----------------------------------------------------------------------|---------------------------------------------------------|
@@ -46,9 +46,10 @@ Per l'utilizzo delle rotte di seguito troviamo una legenda dei parametri che si 
 |` GET ` | `/country/{countryCode}/state/{stateCode}/classification/{nameClass}` | `countryCode`,`stateCode`,`nameClass`                   |
 |` GET ` | `/events/classification`                                              |                                                         | 
 
+
 <div id = esempi_request />
 
-## ESEMPI REQUEST
+## ESEMPI STATS REQUEST
 
 ### /stats/country/{countryCode}
 Request URL: __/stats/country/CA__
@@ -362,6 +363,12 @@ Request URL: __/stats/country/CA/state/QC-ON/classification/music-sports/startda
                     "stateCode": "ON"
                 }
             ]
+        }
+    ],
+    "Periodo": [
+        {
+            "Start Date": "22-2-2022",
+            "End Date": "14-5-2022"
         }
     ],
     "contryCode": "CA"
