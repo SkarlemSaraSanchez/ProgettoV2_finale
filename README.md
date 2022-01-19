@@ -25,9 +25,11 @@ Paragrafo rotte
 |` GET ` | `/stats/country/{countryCode}/state/{stateCode}/classification/{nameClass}/startdate/{start}/enddate/{end}`| | `countryCode`,`stateCode`,`nameClass`,`start`,`end`  |
 |` GET ` | `/stats/country/{countryCode}/state/{stateCode}/statsmensili/{anno}`  |Restituisce le statistiche annuali | `countryCode`,`stateCode`,`anno`                        |
   
+  
 ### ALTRE
 
 |**Tipo**| **Rotta**                                                             | **Descrizione**                   |**Parametri**                                            |
+|--------|-----------------------------------------------------------------------|-----------------------------------|---------------------------------------------------------|
 |` GET ` | `/country/{countryCode}`                                              |Restituisce il numero degli eventi | `countryCode`                                           |
 |` GET ` | `/country/{countryCode}/state/{stateCode}`                            |Restituisce il numero degli eventi | `countryCode`,`stateCode`                               |
 |` GET ` | `/country/{countryCode}/state/{stateCode}/classification/{nameClass}` |Restituisce il numero degli eventi | `countryCode`,`stateCode`,`nameClass`                   |
