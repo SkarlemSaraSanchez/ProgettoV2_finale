@@ -26,11 +26,11 @@ Per l'utilizzo delle rotte di seguito troviamo una legenda dei parametri che si 
 - `country` indica la nazione 
 - `stateCode` indica lo stato o gli stati (:heavy_exclamation_mark:)
 - `nameCat` indica la classificazione o le classificazioni (:heavy_exclamation_mark:)
-- `startdate` inidica la data di inizio periodo
-- `enddate` indica la data fine periodo
+- `startdate` inidica la data di inizio periodo  (:grey_exclamation:)
+- `enddate` indica la data fine periodo  (:grey_exclamation:)
 
 (:heavy_exclamation_mark:)  E' possibile inserire più di un valore (basta dividere i valori desiderati con `-`)
-
+(:grey_exclamation:)  La data deve essere inserita in formato data italiano __gg/mm/aaaa__
 
 ### Stats
 
