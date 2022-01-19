@@ -13,7 +13,7 @@
 <div id = introduzione />
 
 ## INTRODUZIONE
-L'applicazione consente all'utente di analizzare gli eventi che avreanno luogo in un determinato paese, in particolare in Canada, utilizzando l'API di Ticket Master. Ticket Master si occupa della gestione di eventi appartenenti a varie classificazioni.
+L'applicazione consente all'utente di analizzare gli eventi che avranno luogo in un determinato paese, in particolare in Canada, utilizzando l'API di Ticket Master. Ticket Master rende un set di informazioni per gli eventi organizzati nel mondo, la nostra applicazione attraverso le proprie API (di seguito elencate) ne riproduce lo stesso comportamento senza limiti informativi (in funzione dei parametri immessi dall'utente).
 
 <div id = rotte />
 
@@ -574,6 +574,8 @@ Request URL: __/country/CA/state/QC-ON-NU/classification/music-sports__
     "contryCode": "CA"
 }
 ```
+
+### MESSAGGI ERRORE
 
 
 
