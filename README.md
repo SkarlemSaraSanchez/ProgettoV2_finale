@@ -18,12 +18,12 @@ Paragrafo rotte
 
 ### STATISTICHE
 
-|**Tipo**| **Rotta** (/stats/country)                                            | **Descrizione**                   |**Parametri**                                            |
-|--------|-----------------------------------------------------------------------|-----------------------------------|---------------------------------------------------------|
-|` GET ` | `/{countryCode}`                                                      |Restituisce le statistiche         | `countryCode`,`                                         |
-|` GET ` | `/{countryCode}/classification/{nameCat}`                             |Restituisce le statistiche         | `countryCode`,`nameCat`                                 |
-|` GET ` | `/{countryCode}/state/{stateCode}/classification/{nameClass}/startdate/{start}/enddate/{end}`|            | `countryCode`,`stateCode`,`nameClass`,`start`,`end`     |
-|` GET ` | `/{countryCode}/state/{stateCode}/statsmensili/{anno}`                |Restituisce le statistiche annuali | `countryCode`,`stateCode`,`anno`                        |
+|**Tipo**| **Rotta** (/stats/country)                                            |A|**Parametri**                                            |
+|--------|-----------------------------------------------------------------------|-|---------------------------------------------------------|
+|` GET ` | `/{countryCode}`                                                      |A| `countryCode`,`                                         |
+|` GET ` | `/{countryCode}/classification/{nameCat}`                             |A| `countryCode`,`nameCat`                                 |
+|` GET ` | `/{countryCode}/state/{stateCode}/classification/{nameClass}/startdate/{start}/enddate/{end}`|| `countryCode`,`stateCode`,`nameClass`,`start`,`end`     |
+|` GET ` | `/{countryCode}/state/{stateCode}/statsmensili/{anno}`                |A| `countryCode`,`stateCode`,`anno`                        |
   
 ### ALTRE
 
