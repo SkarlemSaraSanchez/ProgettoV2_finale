@@ -607,7 +607,7 @@ Request URL: __/country/CA/state/QC-ON-NU/classification/music-sports__
 }
 ```
 
-### MESSAGGI ERRORE
+## ESEMPI CASI DI ERRORE
 
 
 
