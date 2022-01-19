@@ -16,13 +16,13 @@ Paragrafo dell'introduzione
 ## ROTTE
 Paragrafo rotte
 
-| Tipo  | Rotta /events                                                           | Descrizione                       | Parametri                                               |
-|-------|-------------------------------------------------------------------------|-----------------------------------|---------------------------------------------------------|
-|` GET `| [`/country/{countryCode}`]                                              |                                   | `countryCode`                                           |
-|` GET `| [`/stats/country/{countryCode}`]                                        |                                   | `countryCode`,`                                         |
-|` GET `| [`/stats/country/{countryCode}/classification/{nameCat}`]               |                                   | `countryCode`,`nameCat`                                 |
-|` GET `| [`/country/{countryCode}/state/{stateCode}`]                            |                                   | `countryCode`,`stateCode`                               |
-|` GET `| [`/country/{countryCode}/state/{stateCode}/classification/{nameClass}`] |                                   | `countryCode`,`stateCode`,`nameClass`                   |
+| Tipo  | Rotta /events                                                         | Descrizione                       | Parametri                                               |
+|-------|-----------------------------------------------------------------------|-----------------------------------|---------------------------------------------------------|
+|` GET `| `/country/{countryCode}`                                              |                                   | `countryCode`                                           |
+|` GET `| `/stats/country/{countryCode}`                                        |                                   | `countryCode`,`                                         |
+|` GET `| `/stats/country/{countryCode}/classification/{nameCat}`               |                                   | `countryCode`,`nameCat`                                 |
+|` GET `| `/country/{countryCode}/state/{stateCode}`                            |                                   | `countryCode`,`stateCode`                               |
+|` GET `| `/country/{countryCode}/state/{stateCode}/classification/{nameClass}` |                                   | `countryCode`,`stateCode`,`nameClass`                   |
 
 
 ## ESEMPI REQUEST
