@@ -6,6 +6,8 @@
 * [Introduzione](#introduzione)
 * [Rotte](#rotte)
 * [Esempi Request](#esempi_request)
+   * [Esempi Stats](#esempi_stats)
+   * [Altri Esempi](#esempi_altri)
 
 
 <div id = introduzione />
@@ -49,8 +51,8 @@ Per l'utilizzo delle rotte di seguito troviamo una legenda dei parametri che si 
 |` GET ` | `/events/classification`                                              |                                                         | 
 
 <br>
-
 <div id = esempi_request />
+<div id = esempi_stats />
 
 ## ESEMPI STATS REQUEST
 
@@ -459,6 +461,7 @@ Request URL: __/stats/country/CA/state/ON/statsmensili/2022__
     ]
 }
 ```
+<div id = esempi_altri />
 
 ## ESEMPI ALTRE REQUEST
 
