@@ -40,10 +40,10 @@ Abbiamo quindi implementato classi che instaziono oggetti in grado di gestire tu
 **Le Classi** (*package com.univpm.demo.utils*)
 * __ApiKeyScanner.java__ - L'oggetto di tipo ApiKeyScanner va a leggere in un file di testo recuperando l'apikey di un dato endpoint.
 * __APICall.java__ - Instanziando un oggetto di tipo APICall effetuiamo una chiamata all'url che passiamo come parametro al suo metodo getData(url), lo stesso metodo ritorna il json di risposta. 
-* __EndPoint.java__ - L'oggetto instanziato di questa classe è l oggetto con cui costruiamo tutti i tipi di url da passare al metodo getdata di APICall. La classe contiene metodi che permettono la realzzazione di qualsiasi tipo di url ovvero attraverso l'oggetto possiamo definire un path per l'url e definire tutti i parametri di una queryString.
+* __EndPoint.java__ - L'oggetto instanziato di questa classe è l'oggetto con cui costruiamo tutti i tipi di url da passare al metodo getdata di APICall. La classe contiene metodi che permettono la realzzazione di qualsiasi tipo di url ovvero attraverso l'oggetto possiamo definire un path per l'url e definire tutti i parametri di una queryString.
 * __EndPointApiKey.java__ - (estenzione di EndPoint) Avendo l'esigenza di inserire per ogni chiamata il parametro apikey alla fine di una queryString, per evitare ogni volta di settare questo parametro per Endpoint sul oggetto di tipo EndPoint abbiamo creato questa classe che estende Endpoint ed ogni chiamata aggancia come ultimo parametro della queryString l'apikey. 
 
-In effetti nel codice istanziamo un oggetto di tipo EndPointApikey con il 	quale generare l url da passare a APICall.
+In effetti nel codice istanziamo un oggetto di tipo EndPointApikey con il 	quale generare l'url da passare a APICall.
 * __Parametro.java__ - Con questa classe possiamo realizzare parametri di ogni tipo e anche questa è una classe che può essere riusata in altri contesti o per altre esigenze funzionali. Possiamo associare una chiave a ogni tipo di dato che sia un oggetto "x" o un tipo di dato primitivo. In molti casi nel nostro codice abbiamo utilizzato oggetti di questo tipo	ma con informazione incapsulata diversa, un esempio è quando andiamo a settare i parametri di chiamata con l'oggetto EndPointAiKey.
 
 
