@@ -549,7 +549,7 @@ public class StatsImpl implements I_Stats {
 		if(Long.parseLong(anno)<anno_corrente || Long.parseLong(anno) > 2100 ) {
 			//GESTIONE ERRORE
 			JSONObject err_anno = new JSONObject();
-			err_anno.put("Messaggio", "anno non valido");
+			err_anno.put("messaggio", "anno non valido");
 			err_anno.put("errore", "pattern di chiamata compromesso");
 			return err_anno;
 		}
