@@ -22,10 +22,6 @@ public class EndPointApiKey extends EndPoint {
 		
 	}
 	
-	public EndPointApiKey() {
-		this.apiKey = new Parametro("apikey", "068qHZJdPGcLqwUJG5lkC24XfTKmPesP");
-	}
-	
 	public void addKEy() {
 	if(listaParametri.size()==0) {
 		 addApiKey="?" + this.apiKey.getChiave()+"="+this.apiKey.getValueQueryParams();

@@ -45,7 +45,7 @@ public class EndPoint {
 	}
  
 	public void setPath(String path) {
-		this.i_path=path + ".json"; //CHIEDERE A GE
+		this.i_path=path + ".json"; 
 	}
 
 	public String getPath() {
