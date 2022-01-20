@@ -1,9 +1,12 @@
 package com.univpm.service;
 
+import java.sql.Date;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -64,7 +67,7 @@ public class StatsImpl implements I_Stats {
 	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject getNumberOfEvents(String countryCode ,String stateCode,String nameCat,String startDate,String endDate) {
-		Country ca=new Country("CA");
+		Country ca=new Country("ca");
 		ArrayList<String> list_stati=ca.getDataString();
 		JSONObject resp=new JSONObject();
 		err.put("errore",msg);
@@ -80,7 +83,6 @@ public class StatsImpl implements I_Stats {
 				if(Objects.nonNull(chiamante.getData(source.getApi()))) {
 					System.out.println("DENTRO IF");
 					err.put("messaggio", "connessione fallita");
-					
 					return err;
 				}
 				else {
@@ -184,9 +186,30 @@ public class StatsImpl implements I_Stats {
 								String start=getDate(startDate);//mi ritorna la stringa
 								String end=getDate(endDate);
 								
+								String[] start_g = start.split("T");
+								String[] end_g = end.split("T");
+								String init = start_g[0];
+								String fin = end_g[0];
+								
+								System.out.println("START " + start);
+								System.out.println("END " + end);
+								if(start != null && end != null) {
+									try {
+										GregorianCalendar date_init = new GregorianCalendar(Integer.parseInt(init.split("-")[0]), Integer.parseInt(init.split("-")[1]), Integer.parseInt(init.split("-")[2]));
+										GregorianCalendar date_fin = new GregorianCalendar(Integer.parseInt(fin.split("-")[0]), Integer.parseInt(fin.split("-")[1]), Integer.parseInt(fin.split("-")[2]));
+										if (date_init.after(date_fin)) throw new Exception();
+									}
+									catch(Exception e) {
+										start = null;
+										end = null;
+									}
+								}
+					
 								if(start==null || end==null) {
-									err.put("Messaggio", "Periodo non valido!");
-									return err;
+									JSONObject err_periodo = new JSONObject();
+									err_periodo.put("Messaggio", "Periodo non valido!");
+									err_periodo.put("errore", "Pattern di chiamata compromesso");
+									return err_periodo;
 								}
 								
 									String [] split_s=startDate.split("-");
@@ -521,7 +544,15 @@ public class StatsImpl implements I_Stats {
 		int indice_min = 0;
 		long max = 0;
 		int indice_max = 0;
-			
+		
+		//GESTIONE PARAMETRO ANNO
+		int anno_corrente = Calendar.getInstance().get(Calendar.YEAR);
+		if(Long.parseLong(anno)<anno_corrente || Long.parseLong(anno) > 2100 ) {
+			JSONObject err_anno = new JSONObject();
+			err_anno.put("Messaggio", "anno non valido");
+			err_anno.put("errore", "pattern di chiamata compromesso");
+			return err_anno;
+		}
 		response.put("Anno", anno);
 			
 		//VALIDAZIONE PARAMETRO COUNTRYCODE
@@ -682,9 +713,8 @@ public class StatsImpl implements I_Stats {
 		catch(WrongPeriodException e) {
 			return null;
 		}
-		
 	}
-
+	
 	private long validazione(String name, String valore) {
 		source.setChiaveValore(name, valore);
 		JSONObject risposta = chiamante.getData(source.getApi());
