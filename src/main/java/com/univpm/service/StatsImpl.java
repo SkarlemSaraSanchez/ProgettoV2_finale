@@ -419,7 +419,7 @@ public class StatsImpl implements I_Stats {
 							JSONArray a_stats=new JSONArray();
 							JSONObject st_min= new JSONObject();
 							JSONObject st_max= new JSONObject();
-							obj5.put("categoria", splitCat[i]+ " parametro nn valido");
+							obj5.put("categoria", splitCat[i]+ " parametro non valido");
 							obj5.put("totale eventi organizzati di "+splitCat[i], totale);
 							obj5.put("media eventi per stato  "+splitCat[i], media);
 							obj5.put("statistiche", a_stats);
