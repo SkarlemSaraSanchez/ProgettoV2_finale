@@ -553,7 +553,7 @@ public class StatsImpl implements I_Stats {
 			err_anno.put("errore", "pattern di chiamata compromesso");
 			return err_anno;
 		}
-		response.put("Anno", anno);
+		response.put("Anno",anno);
 			
 		//VALIDAZIONE PARAMETRO COUNTRYCODE
 		boolean valCountryCode = this.validazione2("countryCode", countryCode);
