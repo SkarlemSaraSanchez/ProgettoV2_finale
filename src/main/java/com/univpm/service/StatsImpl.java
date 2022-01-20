@@ -545,7 +545,7 @@ public class StatsImpl implements I_Stats {
 		long max = 0;
 		int indice_max = 0;
 		
-		//GESTIONE PARAMETRO ANNO
+		//GESTIONE VALIDAZIONE PARAMETRO ANNO 
 		int anno_corrente = Calendar.getInstance().get(Calendar.YEAR);
 		if(Long.parseLong(anno)<anno_corrente || Long.parseLong(anno) > 2100 ) {
 			JSONObject err_anno = new JSONObject();
