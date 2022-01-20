@@ -45,7 +45,7 @@ public class EndPoint {
 	}
  
 	public void setPath(String path) {
-		this.i_path=path + ".json"; 
+		this.i_path=path; 
 	}
 
 	public String getPath() {
@@ -152,7 +152,9 @@ public class EndPoint {
 		costruisciApi(); //mi aggiorna con nuovi parametri	 
 		pulisciqueryString();
 		indexParametro=0; //riporto a zero l indice
-		return "";
+
+		return domain + i_path + QueryString + addQueryString;
+		//return "";
 	}	
  	
 	/**

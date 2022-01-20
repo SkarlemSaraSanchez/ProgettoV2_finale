@@ -11,7 +11,7 @@ import com.univpm.model.Parametro;
 public class EndPointApiKey extends EndPoint {
 
 	private Parametro apiKey=new Parametro ("",""); 
-	String addApiKey;
+	String addApiKey = "";
 	
 	public EndPointApiKey(String url,Parametro apiKey){
 		super(url);
