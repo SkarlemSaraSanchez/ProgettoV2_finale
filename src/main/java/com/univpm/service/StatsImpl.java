@@ -523,7 +523,7 @@ public class StatsImpl implements I_Stats {
 	}
 
 	/**
-	 * Questo metodo permette di calcolare le <b>Statistiche Annuali</b> di un determinato stato.
+	 * Questo metodo permette di calcolare le <b>Statistiche Annuali</b> di un determinato stato
 	 * @param countryCode indica la nazione
 	 * @param stateCode indica lo stato
 	 * @param anno indica l'anno 
