@@ -11,6 +11,7 @@ import java.util.Objects;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
 import com.univpm.exception.WrongPeriodException;
@@ -36,10 +37,14 @@ public class StatsImpl implements I_Stats {
 
 	//SETTING DELL'END POINT CHE STIAMO UTILIZZANDO
 	String endpoint = "https://app.ticketmaster.com/discovery/v2/events.json";
+//	String endpoint = "https://app.ticketmaster.com/discovery/v2";
+	
 	ApiKeyScanner scanner = new ApiKeyScanner(endpoint);
 	Parametro apikey = new Parametro("apikey", scanner.readApiKey());
 	EndPointApiKey source = new EndPointApiKey(endpoint, apikey);
-	
+//	Parametro apikey=new Parametro ("apikey","GV7AaEfUWGgyb0QXwOhDquUh5gmpbRMV");
+//	EndPointApiKey source = new EndPointApiKey("https://app.ticketmaster.com/discovery/v2",apikey);
+
 	Country canada=new Country("CA");
 	APICall chiamante=new APICall();
 	ArrayList<String> list_state= canada.getDataString();	
@@ -67,75 +72,47 @@ public class StatsImpl implements I_Stats {
 	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject getNumberOfEvents(String countryCode ,String stateCode,String nameCat,String startDate,String endDate) {
-		Country ca=new Country("ca");
+		Country ca=new Country("CA");
+		
 		ArrayList<String> list_stati=ca.getDataString();
 		JSONObject resp=new JSONObject();
 		err.put("errore",msg);
 		ArrayList <Parametro> list_state=new ArrayList<Parametro>();
-		long val_country = validazione("countryCode", countryCode);
-		if(val_country > 0) {
-			long n=0;
-			resp.put("contryCode", countryCode);
-			resp.put("numero eventi", val_country);
-		}
-		else {
-			if(val_country == -1) {
-				if(Objects.nonNull(chiamante.getData(source.getApi()))) {
-					err.put("messaggio", "connessione fallita");
-					return err;
-				}
-				else {
-					err.put("warning", "connessione fallita");
-					err.put("messaggio", "problema interno al software"
-							+ " controlla apikey ed endpoint");
-					err.remove("errore");
-					return err;
-				}
-			}
-			else {
-				err.put("countryCode", countryCode +" parametro non valido");
-				err.put("numero eventi", "undefined");
-				resp=err;
-				return err;
-			}
-		}
 		
+		/**********tutti gli eventi per countrycode************/
+		resp=withCountrycode(countryCode);
+		if(resp.containsKey("messaggio")) {
+			
+			return resp;
+		}
 		/*******************************************/
 		
-		if(!stateCode.equals("0")) {
-			String[] splitState=stateCode.split("-");
+		if(!stateCode.equals("0")) {//getstats invoca il metodo con staecode!= "0"
+			String[] splitState=stateCode.split("-");//caso in cui 
 			long tot=0;
 			long tmp=0;
-			stati.clear();
+			stati.clear();//su piu chiamate devo pulire l array che inserisco nella risposta
 			
 			for(String s:splitState) {
-				if(validazione("stateCode", s)>0) {
+				long j=validazione("stateCode", s);
+				if(j  == -1) {
+					return getErrori();//problemi di connessione
+				}
+				if(j>0) {
 					
-					long n1=validazione("stateCode", s);
-					tot+=n1;
+					
+					tot+=j;
 					Parametro p=new Parametro(s,true);
 					list_state.add(p);
 					JSONObject stato=new JSONObject();
 					stato.put("stateCode", s);
-					stato.put("numero eventi", n1);
+					stato.put("numero eventi", j);
 					stati.add(stato);
 					resp.put("stati", stati);
 					resp.put("numero eventi",tot );	
 		 		}
 				else {
-					if(validazione("stateCode", s) == -1) {
-						if(Objects.nonNull(chiamante.getData(source.getApi()))) {
-							err.put("messaggio", "connessione fallita");
-							return err;
-						}
-						else {
-							err.put("messaggio", "connessione fallita");
-							err.put("messaggio", "problema interno al software"
-									+ "controlla apikey ed endpoint");
-							return err;
-						}
-					}
-			 		JSONObject stato=new JSONObject();
+					JSONObject stato=new JSONObject();
 			 		Parametro p=new Parametro(s,false);
 			 		list_state.add(p);
 			 		if( list_stati.contains(s)) {
@@ -145,11 +122,13 @@ public class StatsImpl implements I_Stats {
 			 		else {
 			 			stato.put("stateCode", s +" parametro non valido");
 			 		}		 		
-			 		stato.put("numero eventi", "0");
+			 		stato.put("numero eventi", j);
 			 		stati.add(stato);
 			 		resp.put("stati", stati);
 			 		++tmp;
-		 		}
+					}
+			 		
+		 		
 			}
 			if(tmp==splitState.length) {//stessi giri nell esle eventi complessivi=0
 				resp.put("numero eventi", "0");
@@ -170,7 +149,12 @@ public class StatsImpl implements I_Stats {
 				JSONArray stati2=new JSONArray();
 				JSONArray stati_f=new JSONArray();
 				categoria.put("categoria", c);
-				if(validazione("segmentName", c)>0) {
+				long v3=validazione("segmentName", c);
+				if(v3 == -1) {
+					
+					return getErrori();
+				}
+				if(v3>0) {
 				
 					for(Parametro s:list_state) {
 						JSONObject stato1=new JSONObject();//x ogni stato creo un oggetto
@@ -191,36 +175,36 @@ public class StatsImpl implements I_Stats {
 									try {
 										GregorianCalendar date_init = new GregorianCalendar(Integer.parseInt(init.split("-")[0]), Integer.parseInt(init.split("-")[1]), Integer.parseInt(init.split("-")[2]));
 										GregorianCalendar date_fin = new GregorianCalendar(Integer.parseInt(fin.split("-")[0]), Integer.parseInt(fin.split("-")[1]), Integer.parseInt(fin.split("-")[2]));
-										if (date_init.after(date_fin)) throw new Exception();
+										if (date_init.after(date_fin)) {
+											JSONObject er = new JSONObject();
+											er.put("errore", "startDate superiore a endDate");
+											return er;
+										}
 									}
 									catch(Exception e) {
+										System.out.println("DENTRO CATCH");
 										start = null;
 										end = null;
 									}
 								}
-					
-								if(start==null || end==null) {
-									JSONObject err_periodo = new JSONObject();
-									err_periodo.put("Messaggio", "Periodo non valido!");
-									err_periodo.put("errore", "Pattern di chiamata compromesso");
-									return err_periodo;
+								
+								if(start== null || end== null) {
+									System.out.println("DOPO ECCEZIONE");
+									JSONObject err1 = new JSONObject();
+									err1.put("Errore", "Periodo non valido");
+									err1.put("Messaggio", "Pattern di chiamata compromesso");
+						
+									chiamante.getData(source.getApi());
+									return err1;
 								}
 								
-								String [] split_s=startDate.split("-");
+									String [] split_s=startDate.split("-");
 								String [] split_e=endDate.split("-");
 								
 								result =cacolaMedia(split_s,split_e);
 								
 								source.setChiaveValore("startDateTime", start);
 								source.setChiaveValore("endDateTime", end);
-								
-								JSONObject periodo = new JSONObject();
-								periodo.put("Start Date", startDate);
-								periodo.put("End Date", endDate);
-								JSONArray arr_periodo = new JSONArray();
-								arr_periodo.add(periodo);
-								new_resp.put("Periodo", arr_periodo);
-								
 							}
 							JSONObject risposta = chiamante.getData(source.getApi());
 							JSONObject resp1=new JSONObject();
@@ -257,16 +241,13 @@ public class StatsImpl implements I_Stats {
 					categoria.put("stati",stati2);	
 				}
 				else {
-					if(validazione("segmentName", c) == -1) {
-						err.put("messaggio", "connessione fallita");
-						return err;
-					}
-					else {
+					
+					
 						categoria.put("stati",stati_f);
 						categoria.put("categoria", c+ " paramentro non valido");
 						categoria.put("numero eventi", "0");
 					}
-				}
+				
 				categories.add(categoria);		
 			}
 			resp=new_resp;
@@ -285,43 +266,39 @@ public class StatsImpl implements I_Stats {
 	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject getstatsNumberOfEvents(String countryCode,String stateCode,String nameCat) {
-		JSONObject err=new JSONObject();
+	
 		JSONObject resp=new JSONObject();
-		int call = 0;
+	
 		
 		if(countryCode.equals("ca") || countryCode.equals("CA")) {
 
 			ArrayList<Parametro> perCalcolare=new ArrayList<Parametro>();
 			JSONObject  calcola=new JSONObject();
-			if(stateCode.equals("0")) {
-				//ITERO GLI STATI
-				for(String x:list_state) {
-					if(nameCat.equals("0")) {
 			
-						calcola=getNumberOfEvents(countryCode,x, "0","0","0");
+				//ITERO GLI STATI
+				for(String x:list_state) {//list_state codici di stecode nel model country
+					if(nameCat.equals("0")) {//chiamaa senza nameCat
+			
+						calcola=getNumberOfEvents(countryCode,x, "0","0","0");//se sbaglio a settare model
 						if(calcola.containsKey("messaggio")) {
 							return calcola;
 						}
 				
-						if(calcola.get("numero eventi")instanceof String) {
-							Parametro valori =new Parametro(x,0);
-							perCalcolare.add(valori);
-			
-						}
+
 						else {	
-							long n=(long) calcola.get("numero eventi");
+							long n=Long.parseLong((String.valueOf(calcola.get("numero eventi"))));
 							Parametro valori =new Parametro(x,n);
-							System.out.println("chiamate x stats " +x +" xxxxxxxx->"+ n);
 							perCalcolare.add(valori);
 						}
 					}
 					else {
-						call++;
-						JSONArray errori=new JSONArray();
+						
+						
 						String[] splitCat=nameCat.split("-");
 						numCategorie=splitCat.length;
 						for(String c:splitCat) {
 							calcola=getNumberOfEvents(countryCode,x, c,"0","0");
+						
 				 
 							JSONArray categorie=new JSONArray();
 							if(Objects.nonNull(calcola.get("categorie"))) {
@@ -368,8 +345,8 @@ public class StatsImpl implements I_Stats {
 						int indexInitialMin=0;
 						
 						for(int v=0;v<perCalcolare.size();v++) {
-							if(perCalcolare.get(v).getCategoria().equals(splitCat[i])) {
-								indexInitialMin=v;
+							if(perCalcolare.get(v).getCategoria().equals(splitCat[i])) {//a-b
+								indexInitialMin=v;//primo valore dell array dei valori rispetto a categoria
 								break;
 							}	
 						}
@@ -387,6 +364,7 @@ public class StatsImpl implements I_Stats {
 						if(trovato) {
 							for(int h=0;h<perCalcolare.size();h++) {//MASSIMO E MINIMO
 								if(perCalcolare.get(h).getCategoria().equals(splitCat[i])) {
+									System.out.println("max  "+ max+ "  min  "+ min);
 									totale += perCalcolare.get(h).getLong();
 									if(perCalcolare.get(h).getLong()>max) {
 										max=perCalcolare.get(h).getLong();
@@ -434,14 +412,13 @@ public class StatsImpl implements I_Stats {
 							JSONArray a_stats=new JSONArray();
 							JSONObject st_min= new JSONObject();
 							JSONObject st_max= new JSONObject();
-							obj5.put("categoria", splitCat[i]+ " parametro non valido");
+							obj5.put("categoria", splitCat[i]+ " parametro nn valido");
 							obj5.put("totale eventi organizzati di "+splitCat[i], totale);
 							obj5.put("media eventi per stato  "+splitCat[i], media);
 							obj5.put("statistiche", a_stats);
 							a5.add(obj5);
 						}
-						respost.put("Stats",a5);
-						respost.put("nazione", "ca");
+						respost.put("stats",a5);	
 						resp=respost;	
 					}
 				
@@ -499,13 +476,8 @@ public class StatsImpl implements I_Stats {
 					resp = respost;
 				}
 			}
-			else {
-//			qui dentro entro se o statecode diverso da zero ma creo un nuovo metodp
-//			calcola=getNumberOfEvents(countryCode,stateCode, "0","0","0");	
-//			resp.put("messagio", );
-//			resp=respost;
-			}
-		}
+	
+		
 		else {
 			JSONObject respost=new JSONObject();
 			respost.put("messaggio", "statistiche disponibili solo per il Canada");
@@ -516,7 +488,7 @@ public class StatsImpl implements I_Stats {
 	}
 
 	/**
-	 * Questo metodo permette di calcolare le <b>Statistiche Annuali</b> di un determinato stato
+	 * Questo metodo permette di calcolare le <b>Statistiche Annuali</b> di un determinato stato.
 	 * @param countryCode indica la nazione
 	 * @param stateCode indica lo stato
 	 * @param anno indica l'anno 
@@ -536,7 +508,7 @@ public class StatsImpl implements I_Stats {
 		int indice_min = 0;
 		long max = 0;
 		int indice_max = 0;
-		
+			
 		//GESTIONE VALIDAZIONE PARAMETRO ANNO 
 		int anno_corrente = Calendar.getInstance().get(Calendar.YEAR);
 		if(Long.parseLong(anno)<anno_corrente || Long.parseLong(anno) > 2100 ) {
@@ -546,33 +518,32 @@ public class StatsImpl implements I_Stats {
 			err_anno.put("errore", "pattern di chiamata compromesso");
 			return err_anno;
 		}
-		response.put("Anno",anno);
+		
+		response.put("Anno", anno);
 			
 		//VALIDAZIONE PARAMETRO COUNTRYCODE
-		boolean valCountryCode = this.validazione2("countryCode", countryCode);
-		if(!valCountryCode) {
-			obj = new JSONObject();
-			obj.put("Country", countryCode);
-			obj.put("Errore", "countryCode non valido");
-			response = obj;
-			return response;
+		response = withCountrycode(countryCode);
+		if(response.containsKey("messaggio")) {
+
+		return response;
 		}
+		
 		response.put("Country", countryCode);
 		
 		//VALIDAZIONE PARAMETRO STATECODE
-		boolean valStateCode = this.validazione2("stateCode", stateCode);
-		if(!valStateCode) {
-			obj = new JSONObject();
-			obj.put("State", stateCode);
-			obj.put("Errore", "stateCode non valido");
-			response = obj;
-			return response;
+		long valStateCode = this.validazione("stateCode", stateCode);
+		
+		//ERRORE CONNESSIONE
+		if(valStateCode == -1) {
+			return getErrori();
+		}
+		if(!list_state.contains(stateCode)) {
+			JSONObject errore = new JSONObject();
+			errore.put("errore", "stateCode non valido");
+			return errore;
 		}
 		response.put("State", stateCode);
 			
-		//GESTIONE STATISTISTICHE MENSILI OVVERO CALCOLO DEGLI EVENTI PER OGNI CLASSIFICAZIONE
-		ArrayList<Classificazione> classificazioni = this.getClassifications(); // HO LE CLASSIFICAZIONI
-		
 		Periodo p1; //RAPPRESENTA IL PERIODO DELL'ANNO
 		//GESTISCO L'ECCEZIONE CHE MI GENERA LA CLASSE PERIODO
 		try { p1 = new Periodo(1,1, Integer.parseInt(anno), 31,12,Integer.parseInt(anno)); } 
@@ -583,9 +554,14 @@ public class StatsImpl implements I_Stats {
 			err.put("Messaggio", "Pattern di chiamata compromesso");
 			return err;
 		}
+		
 		JSONArray arr_obj = new JSONArray();
-		for (Classificazione c : classificazioni) {
-			JSONObject dato = setupModel(countryCode,stateCode,c.getName(),p1);
+		JSONArray arr_class = this.getClassificationEvents(); //HO LE CLASSIFICAZIONI
+		for (int i=0; i<arr_class.size(); i++) {
+			JSONObject c = (JSONObject) arr_class.get(i);
+			String nome = (String) c.get("name");
+			if(nome.contains("&")) nome = nome.replace("&", "%");
+			JSONObject dato = setupModel(countryCode,stateCode,nome,p1);
 			//GESTICO L'ECCEZIONE CHE PUO' GENERARMI IL METODO getData
 			if(dato == null) {
 				err.put("errore", "Connessione Fallita");
@@ -594,7 +570,7 @@ public class StatsImpl implements I_Stats {
 			}
 			long num = this.numeroElementi(dato);
 			obj = new JSONObject();
-			obj.put("Nome", c.getName());
+			obj.put("Nome", nome);
 			obj.put("Numero Eventi", num);
 			arr_obj.add(obj);
 		}
@@ -684,33 +660,42 @@ public class StatsImpl implements I_Stats {
 	}
 
 	private String getDate(String date) {
+		
 		String[] arrayDate=date.split("-");
-		if(arrayDate[0].length()<2) {
+		
+		if(arrayDate.length>1 && arrayDate[0].length()<2) {
 			String correggi="0";
 			correggi+=arrayDate[0];
 			arrayDate[0]=correggi;
 		}
-		if(arrayDate[1].length()<2) {
+		if(arrayDate.length>1 && arrayDate[1].length()<2) {
 			String correggi="0";
 			correggi+=arrayDate[1];
 			arrayDate[1]=correggi;
 		}
-		String giorno=arrayDate[0];
-		String mese=arrayDate[1];
-		String anno=arrayDate[2];
+		
+		
 		
 		try {
+			if (arrayDate.length==3) {
+				String giorno=arrayDate[0];
+				String mese=arrayDate[1];
+				String anno=arrayDate[2];
 			Periodo p=new Periodo(giorno,mese,anno);
 			return p.getStartDate();
+			}else
+				return null;
 		}
 		catch(WrongPeriodException e) {
 			return null;
 		}
+		
 	}
-	
+
 	private long validazione(String name, String valore) {
 		source.setChiaveValore(name, valore);
 		JSONObject risposta = chiamante.getData(source.getApi());
+		
 		if(risposta == null) return -1;
 		return numeroElementi(risposta);
 	}
@@ -728,10 +713,10 @@ public class StatsImpl implements I_Stats {
 	@SuppressWarnings("unchecked")
 	@Override
 	public JSONArray getClassificationEvents() {
-		EndPoint n =new EndPoint ("www.prova.it");
-		System.out.println(n.getApi());
-		
-		EndPointApiKey source=new EndPointApiKey("https://app.ticketmaster.com/discovery/v2/classifications.json",apikey);
+
+		EndPointApiKey source=new EndPointApiKey("https://app.ticketmaster.com/discovery/v2",apikey);
+		source.setPath("/classifications.json");
+
 		JSONObject tmp= chiamante.getData(source.getApi());
 		JSONObject p1=(JSONObject) tmp.get("_embedded");
 		JSONArray p2=(JSONArray) p1.get("classifications");//quindi p2 Ã¨ un json array
@@ -749,43 +734,11 @@ public class StatsImpl implements I_Stats {
 				response.put("id", id);
 				response.put("name", s);
 				arrResponse.add(response);
-			}
-			else {
-				err.put("errore interno", "classificazioni non disponibili");
-				arrResponse.add(err);
-				break;
-			}
+			}//è se è null nn è gestito
 		}
 		return arrResponse;
 	}
 	
-	//RITORNA LE MACROCATEGORIE IN FORMATO ARRAYLIST
-	public ArrayList<Classificazione> getClassifications() {
-		ArrayList<Classificazione> classificazioni = new ArrayList<Classificazione>();
-		EndPointApiKey source=new EndPointApiKey("https://app.ticketmaster.com/discovery/v2/classifications.json",apikey);
-		JSONObject tmp= chiamante.getData(source.getApi());
-		JSONObject p1=(JSONObject) tmp.get("_embedded");
-		JSONArray p2=(JSONArray) p1.get("classifications");//quindi p2 Ã¨ un json array
-		
-		for(int i=0;i<p2.size();i++) {
-			JSONObject x=(JSONObject) p2.get(i);
-			JSONObject y=(JSONObject) x.get("segment");
-				
-			if(y!=null) {
-				String id= (String) y.get("id");
-				String s= (String) y.get("name");
-				//GESTISCO IL CASO DELLA CLASSIFICAZIONE CON IL CHAR & CHE MI DA PROBLEMI QUANDO FACCIO LA CHIAMATA A TICKETMASTER
-				if(s.contains("&")) {
-					System.out.println();
-					s = s.replace("&", "%");
-				}
-				Classificazione classificazione = new Classificazione(s,id);
-				classificazioni.add(classificazione);
-			}
-		}
-		return classificazioni;
-	}	
-
 	//FA LA VALIDAZIONE DEL PARAMETRO
 	private boolean validazione2(String name, String valore) {
 		source.setChiaveValore(name, valore);
@@ -817,4 +770,42 @@ public class StatsImpl implements I_Stats {
 		source.setChiaveValore("endDateTime", periodo.getEndDate());
 		return chiamante.getData(source.getApi());
 	}
+	public JSONObject getErrori () {
+
+		JSONArray errArr=new JSONArray();
+		JSONObject errore=new JSONObject();
+		JSONObject errore2=new JSONObject();
+		errore.put("errore ", "problema interno al software"
+				+ " controlla apikey ed endpoint");
+		errArr.add(errore);
+		errore2.put("errore", "problemi con la risposta dal server");
+		errArr.add(errore2);
+		err.put("messaggio", "connessione fallita");
+		err.put("lista possibili errori", errArr);
+	return err;	
+	}
+	public JSONObject withCountrycode (String countryCode) {
+		JSONObject responce=new JSONObject();
+		long co=validazione("countryCode", countryCode);
+		if(co  == -1) {
+		
+		return getErrori();
+		}
+		//fine validazione canada
+		if(co >0) {
+		
+			responce.put("contryCode", countryCode);
+			responce.put("numero eventi", co);
+		}
+		else {
+				err.put("messaggio", "errore");
+				err.put("countryCode", countryCode +" parametro non valido");
+				err.put("numero eventi", co);
+			
+				return err;
+			
+		}
+	return responce;	
+	}
+	
 }

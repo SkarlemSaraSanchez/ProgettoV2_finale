@@ -205,7 +205,7 @@ public class EndPoint {
 			codiceerrore++;
 			responce=false; 
 		}
-		if( v.equals("") || v.equals("-")) { //MODIFICA SARA
+		if( v.equals("")) { //MODIFICA SARA
 			//incfremento di 2
 			codiceerrore++;
 			codiceerrore++;	
