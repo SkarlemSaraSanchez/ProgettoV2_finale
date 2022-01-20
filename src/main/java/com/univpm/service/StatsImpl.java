@@ -22,6 +22,7 @@ import com.univpm.model.Parametro;
 import com.univpm.model.Periodo;
 import com.univpm.util.APICall;
 import com.univpm.util.ApiKeyScanner;
+import com.univpm.util.EndPoint;
 import com.univpm.util.EndPointApiKey;
 
 /**
@@ -70,22 +71,20 @@ public class StatsImpl implements I_Stats {
 		ArrayList<String> list_stati=ca.getDataString();
 		JSONObject resp=new JSONObject();
 		err.put("errore",msg);
-		ArrayList <Parametro> list_state=new ArrayList<Parametro>();	
-		if(validazione("countryCode", countryCode)>0) {
+		ArrayList <Parametro> list_state=new ArrayList<Parametro>();
+		long val_country = validazione("countryCode", countryCode);
+		if(val_country > 0) {
 			long n=0;
-			n=validazione("countryCode", countryCode);
 			resp.put("contryCode", countryCode);
-			resp.put("numero eventi", n);
+			resp.put("numero eventi", val_country);
 		}
 		else {
-			if(validazione("countryCode", countryCode) == -1) {
+			if(val_country == -1) {
 				if(Objects.nonNull(chiamante.getData(source.getApi()))) {
-					System.out.println("DENTRO IF");
 					err.put("messaggio", "connessione fallita");
 					return err;
 				}
 				else {
-					System.out.println("DENTRO ELSE ");
 					err.put("warning", "connessione fallita");
 					err.put("messaggio", "problema interno al software"
 							+ " controlla apikey ed endpoint");
@@ -126,12 +125,10 @@ public class StatsImpl implements I_Stats {
 				else {
 					if(validazione("stateCode", s) == -1) {
 						if(Objects.nonNull(chiamante.getData(source.getApi()))) {
-							System.out.println("DENTRO IF");
 							err.put("messaggio", "connessione fallita");
 							return err;
 						}
 						else {
-							System.out.println("DENTRO ELSE ");
 							err.put("messaggio", "connessione fallita");
 							err.put("messaggio", "problema interno al software"
 									+ "controlla apikey ed endpoint");
@@ -185,14 +182,12 @@ public class StatsImpl implements I_Stats {
 								String start=getDate(startDate);//mi ritorna la stringa
 								String end=getDate(endDate);
 								
-								String[] start_g = start.split("T");
-								String[] end_g = end.split("T");
-								String init = start_g[0];
-								String fin = end_g[0];
-								
-								System.out.println("START " + start);
-								System.out.println("END " + end);
+								//GESTIONE PARAMETRO NON VALIDO
 								if(start != null && end != null) {
+									String[] start_g = start.split("T");
+									String[] end_g = end.split("T");
+									String init = start_g[0];
+									String fin = end_g[0];
 									try {
 										GregorianCalendar date_init = new GregorianCalendar(Integer.parseInt(init.split("-")[0]), Integer.parseInt(init.split("-")[1]), Integer.parseInt(init.split("-")[2]));
 										GregorianCalendar date_fin = new GregorianCalendar(Integer.parseInt(fin.split("-")[0]), Integer.parseInt(fin.split("-")[1]), Integer.parseInt(fin.split("-")[2]));
@@ -211,7 +206,7 @@ public class StatsImpl implements I_Stats {
 									return err_periodo;
 								}
 								
-									String [] split_s=startDate.split("-");
+								String [] split_s=startDate.split("-");
 								String [] split_e=endDate.split("-");
 								
 								result =cacolaMedia(split_s,split_e);
@@ -327,7 +322,6 @@ public class StatsImpl implements I_Stats {
 						numCategorie=splitCat.length;
 						for(String c:splitCat) {
 							calcola=getNumberOfEvents(countryCode,x, c,"0","0");
-							System.out.println(calcola);
 				 
 							JSONArray categorie=new JSONArray();
 							if(Objects.nonNull(calcola.get("categorie"))) {
@@ -393,7 +387,6 @@ public class StatsImpl implements I_Stats {
 						if(trovato) {
 							for(int h=0;h<perCalcolare.size();h++) {//MASSIMO E MINIMO
 								if(perCalcolare.get(h).getCategoria().equals(splitCat[i])) {
-									System.out.println("max  "+ max+ "  min  "+ min);
 									totale += perCalcolare.get(h).getLong();
 									if(perCalcolare.get(h).getLong()>max) {
 										max=perCalcolare.get(h).getLong();
@@ -515,7 +508,7 @@ public class StatsImpl implements I_Stats {
 		}
 		else {
 			JSONObject respost=new JSONObject();
-			respost.put("messagio", "statistiche disponibili solo per il Canada");
+			respost.put("messaggio", "statistiche disponibili solo per il Canada");
 			respost.put("codice ammesso", "countryCode: ca/CA");
 			resp=respost;
 		}
@@ -735,6 +728,9 @@ public class StatsImpl implements I_Stats {
 	@SuppressWarnings("unchecked")
 	@Override
 	public JSONArray getClassificationEvents() {
+		EndPoint n =new EndPoint ("www.prova.it");
+		System.out.println(n.getApi());
+		
 		EndPointApiKey source=new EndPointApiKey("https://app.ticketmaster.com/discovery/v2/classifications.json",apikey);
 		JSONObject tmp= chiamante.getData(source.getApi());
 		JSONObject p1=(JSONObject) tmp.get("_embedded");
@@ -745,7 +741,7 @@ public class StatsImpl implements I_Stats {
 			JSONObject x=(JSONObject) p2.get(i);
 			JSONObject y=(JSONObject) x.get("segment");
 			
-			if(y!=null) {
+			if(Objects.nonNull(y)) {
 				String id= (String) y.get("id");
 				String s= (String) y.get("name");
 				JSONObject response=new JSONObject();
@@ -753,6 +749,11 @@ public class StatsImpl implements I_Stats {
 				response.put("id", id);
 				response.put("name", s);
 				arrResponse.add(response);
+			}
+			else {
+				err.put("errore interno", "classificazioni non disponibili");
+				arrResponse.add(err);
+				break;
 			}
 		}
 		return arrResponse;
