@@ -10,6 +10,7 @@
 * [Esempi Request](#esempi_request)
    * [Esempi Stats](#esempi_stats)
    * [Altri Esempi](#esempi_altri)
+   * [Casi di Errore](#errori)
 
 
 <div id = introduzione />
@@ -91,7 +92,7 @@ Per l'utilizzo delle rotte di seguito troviamo una legenda dei parametri che si 
 ## ESEMPI STATS REQUEST
 
 ### /stats/country/{countryCode}
-Request URL: __/stats/country/CA__
+Request URL: __/stats/country/ca__
 ```json
 {
     "Stats": {
@@ -125,7 +126,7 @@ Request URL: __/stats/country/CA__
 ```
 
 ### stats/country/{countryCode}/classification/{nameCat}
-Request URL: __/stats/country/CA/classification/music__
+Request URL: __/stats/country/ca/classification/music__
 ```json
 {
     "Stats": [
@@ -164,7 +165,7 @@ Request URL: __/stats/country/CA/classification/music__
     "nazione": "ca"
 }
 ```
-Request URL: __/stats/country/CA/classification/music-sports__
+Request URL: __/stats/country/ca/classification/music-sports__
 ```json
 {
     "Stats": [
@@ -234,7 +235,7 @@ Request URL: __/stats/country/CA/classification/music-sports__
     "nazione": "ca"
 }
 ```
-Request URL: __/stats/country/CA/classification/music-sports-film__
+Request URL: __/stats/country/ca/classification/music-sports-film__
 ```json
 {
     "Stats": [
@@ -377,14 +378,14 @@ Request URL: __/stats/country/CA/state/QC-ON/classification/music-sports/startda
             "categoria": "music",
             "stati": [
                 {
-                    "numero eventi": 283,
-                    "media mensile eventi": "141,5",
-                    "stateCode": "QC"
+                    "numero eventi": 289,
+                    "media mensile eventi": "144,5",
+                    "stateCode": "qc"
                 },
                 {
-                    "numero eventi": 497,
-                    "media mensile eventi": "248,5",
-                    "stateCode": "ON"
+                    "numero eventi": 508,
+                    "media mensile eventi": "254",
+                    "stateCode": "on"
                 }
             ]
         },
@@ -392,14 +393,14 @@ Request URL: __/stats/country/CA/state/QC-ON/classification/music-sports/startda
             "categoria": "sports",
             "stati": [
                 {
-                    "numero eventi": 76,
-                    "media mensile eventi": "38",
-                    "stateCode": "QC"
+                    "numero eventi": 80,
+                    "media mensile eventi": "40",
+                    "stateCode": "qc"
                 },
                 {
-                    "numero eventi": 134,
-                    "media mensile eventi": "67",
-                    "stateCode": "ON"
+                    "numero eventi": 138,
+                    "media mensile eventi": "69",
+                    "stateCode": "on"
                 }
             ]
         }
@@ -410,12 +411,12 @@ Request URL: __/stats/country/CA/state/QC-ON/classification/music-sports/startda
             "End Date": "14-5-2022"
         }
     ],
-    "contryCode": "CA"
+    "contryCode": "ca"
 }
 ```
 
 ### stats/country/{countryCode}/state/{stateCode}/statsmensili/{anno}
-Request URL: __/stats/country/CA/state/ON/statsmensili/2022__
+Request URL: __/stats/country/ca/state/on/statsmensili/2022__
 ```json
 {
     "Anno": "2022",
@@ -464,8 +465,8 @@ Request URL: __/stats/country/CA/state/ON/statsmensili/2022__
             "Media Mensile": 308
         }
     ],
-    "State": "ON",
-    "Country": "CA",
+    "State": "on",
+    "Country": "ca",
     "TOT EVENTI": 3706,
     "Stats Classificazioni": [
         {
@@ -500,7 +501,7 @@ Request URL: __/stats/country/CA/state/ON/statsmensili/2022__
 ## ESEMPI ALTRE REQUEST
 
 ### /country/{countryCode}
-Request URL: __/country/CA__
+Request URL: __/country/ca__
 ```json
 {
     "numero eventi": 6414,
@@ -508,7 +509,7 @@ Request URL: __/country/CA__
 }
 ```
 ### /country/{countryCode}/state/{stateCode}
-Request URL: __/country/CA/state/ON__
+Request URL: __/country/ca/state/on__
 ```json
 {
     "numero eventi": 3696,
@@ -521,27 +522,27 @@ Request URL: __/country/CA/state/ON__
     ]
 }
 ```
-Request URL: __/country/CA/state/ON-QC-PE-NU__
+Request URL: __/country/ca/state/on-qc-pe-nu__
 ```json
 {
     "numero eventi": 4868,
-    "contryCode": "CA",
+    "contryCode": "ca",
     "stati": [
         {
             "numero eventi": 3696,
-            "stateCode": "ON"
+            "stateCode": "on"
         },
         {
             "numero eventi": 1159,
-            "stateCode": "QC"
+            "stateCode": "qc"
         },
         {
             "numero eventi": 13,
-            "stateCode": "PE"
+            "stateCode": "pe"
         },
         {
             "numero eventi": "0",
-            "stateCode": "NU"
+            "stateCode": "nu"
         }
     ]
 }
@@ -564,7 +565,7 @@ Request URL: __/country/CA/state/QC/classification/music__
     "contryCode": "CA"
 }
 ```
-Request URL: __/country/CA/state/QC-ON-NU/classification/music-sports__
+Request URL: __/country/ca/state/QC-ON-NU/classification/music-sports__
 ```json
 {
     "categorie": [
@@ -606,8 +607,83 @@ Request URL: __/country/CA/state/QC-ON-NU/classification/music-sports__
     "contryCode": "CA"
 }
 ```
+<div id = errori />
 
 ## ESEMPI CASI DI ERRORE
 
+Di seguito troviamo delle risposte generate da errori inseriti dall'utente in fase di scrittura delle rotte delle **Statistiche**.
+
+### stats/country/{countryCode}
+Request URL: __stats/country/us__
+```json
+{
+    "messagio": "statistiche disponibili solo per il Canada",
+    "codice ammesso": "countryCode: ca/CA"
+}
+```
+
+### stats/country/{countryCode}/classification/{nameCat}
+Request URL: stats/country/ca/classification/music-phone
+```json
+{
+    "Stats": [
+        {
+            "totale eventi organizzati di music": 2337,
+            "statistiche": [
+                {
+                    "statistiche stati con numero maggiore di eventi": [
+                        {
+                            "stato  ": "ON",
+                            "num eventi": 894
+                        }
+                    ]
+                },
+                {
+                    "statistiche stati con numero minore  di eventi": [
+                        {
+                            "stato  ": "NT",
+                            "num eventi": 0
+                        },
+                        {
+                            "stato  ": "NU",
+                            "num eventi": 0
+                        },
+                        {
+                            "stato  ": "YT",
+                            "num eventi": 0
+                        }
+                    ]
+                }
+            ],
+            "categoria": "music",
+            "media eventi per stato  music": 194
+        },
+        {
+            "totale eventi organizzati di phone": 0,
+            "statistiche": [],
+            "categoria": "phone parametro non valido",
+            "media eventi per stato  phone": 0
+        }
+    ],
+    "nazione": "ca"
+}
+```
+
+### stats/country/{countryCode}/state/{stateCode}/classification/{nameClass}/startdate/{start}/enddate/{end}
+Request URL: __stats/country/ca/state/qc/classification/music-sports/startdate/16-2-2022/enddate/1-1-2022__
+```json
+{
+    "Messaggio": "Periodo non valido!",
+    "errore": "Pattern di chiamata compromesso"
+}
+```
+### stats/country/{countryCode}/state/{stateCode}/statsmensili/{anno}
+Request URL: __stats/country/ca/state/qc/statsmensili/2010__
+```json
+{
+    "Messaggio": "anno non valido",
+    "errore": "pattern di chiamata compromesso"
+}
+```
 
 
